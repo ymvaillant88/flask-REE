@@ -1,15 +1,14 @@
 import io
 import os
 import matplotlib
-from flask import Flask, request, jsonify, send_file, render_template, Response
+from flask import Flask, request, jsonify, render_template, Response
 import requests as requests
 import pandas as pd
 from sqlalchemy import create_engine
-from datetime import datetime, timedelta
+from datetime import datetime
 import matplotlib.pyplot as plt
 import plotly.express as px
 from flask_cors import CORS
-import base64
 
 matplotlib.pyplot.switch_backend('Agg')
 
@@ -162,7 +161,7 @@ def get_chart(chart_type, orientation, df_BD):
 
 @app.route('/', methods=['GET'])
 def index():
-    return "API de datos de demanda de energía eléctrica en España"
+    return render_template('home.html')
 
 
 # ENDPOINT 1
@@ -287,6 +286,5 @@ def wipe_data():
             return "No tienes permisos para borrar los datos"
     else:
         return "No se ha proporcionado la contraseña: Argumento secret"
-
 if __name__ == '__main__':
     app.run(debug=True, port=os.getenv("PORT", default=5000))
